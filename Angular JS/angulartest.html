@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="demoApp">
+
+<head>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min.js"></script>
+</head>
+
+<body>
+
+	<div>
+		<div ng-view=""></div>
+	</div>
+
+	<script>
+		var demoApp = angular.module('demoApp', ['ngRoute']);
+
+		demoApp.config(['$routeProvider', function($routeProvider) {
+			$routeProvider
+				.when('/view1',
+					{
+						controller: 'SimpleController',
+						templateUrl: 'partials/view1.html'
+					})
+				.when('/view2', 
+					{
+						controller: 'SimpleController',
+						templateUrl: 'partials/view2.html'
+					})
+				.otherwise({ redirectTo: '/view1' });
+		}]);
+	
+		
+		demoApp.factory('simpleFactory', function() {
+			var persons_ = [
+				{ name:'Rony Rahman', city:'Morwell' },
+				{ name:'Benazir Bhutto', city:'Moe' },
+				{ name:'Collin Walker', city:'Morwell' },
+				{ name:'John White', city:'Traralgon' }
+			];
+			
+			var fac = {};
+
+			fac.setPersons = function () {
+				return [];
+			};
+
+			fac.getPersons = function() {
+				return persons_;
+			};
+
+			return fac;
+		});
+		
+
+		demoApp.controller('SimpleController', ['$scope', 'simpleFactory', function($scope, simpleFactory) {
+			$scope.persons = [];
+
+			init();
+
+			function init() {
+				$scope.persons = simpleFactory.getPersons();
+			}
+
+			$scope.addPerson = function() {
+				$scope.persons.push(
+					{
+						name: $scope.newPerson.name,
+						city: $scope.newPerson.city
+					});
+			};
+		}]);
+	</script>	
+</body>
+</html>
