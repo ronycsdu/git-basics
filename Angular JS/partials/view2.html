@@ -5,7 +5,7 @@
 	<input type="text" ng-model="filter.city">
 	<br>
 	<ul>
-		<li ng-repeat="x in persons | filter:filter.city">{{ x.name }} - {{ x.city }}</li>
+		<li ng-repeat="y in persons | filter:filter.city">{{ y.name }} - {{ y.city }}</li>
 	</ul>
 
 	<a href="#/view1">Show View 1</a>
